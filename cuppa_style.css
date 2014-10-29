@@ -13,7 +13,7 @@ body{
     /*background-color: #ff0000;*/
     position: relative;
     margin: 50px auto;
-    width: 350px;
+    width: 320px;
     text-align: center;
 }
 .Timer_digit{
@@ -68,7 +68,7 @@ body{
 .MainControl{
     positione: relative;
     margin: 30px auto;
-    width: 350px;
+    width: 320px;
     text-align: center;
     font-size: 1.5em;
 }
