@@ -4,10 +4,11 @@ var TimerStep = 100;
 var timer = {};
 var TimerIsOnFlag = false;
 var KnobIsOnFlag = false;
+var TeaReadySound = {};
 
 $(document).ready(function(){
     $(".TimerKnob").hide();
-
+    $(".TeaReady").hide();
     init();
 
     $(".MainButton").click(function(){
@@ -32,6 +33,7 @@ function init(){
     TimerIsOnFlag = false;
     KnobIsOnFlag = false;
     updateTime(Time);
+    TeaReadySound = new Audio('sounds/tea-ready.mp3');
 }
 
 function loadTime(time){
@@ -48,6 +50,7 @@ function setTime(){
     KnobIsOnFlag = false;
     $(".TimerKnob").toggle();
     $(".Timer").toggle();
+    $(".TeaReady").hide();
     if(checkKnob($("#time-knob-mm"))&&checkKnob($("#time-knob-ss"))){
         var minutes = parseInt($("#time-knob-mm").val());
         var seconds = parseInt($("#time-knob-ss").val());
@@ -67,7 +70,7 @@ function updateTime(time){
     var minutes = Math.floor((time/1000)/60);
     $("#minute_display").text(minutes);
     $("#second_display").text(seconds);
-    $("#millisec_display").text(milliseconds)
+    $("#millisec_display").text(milliseconds);
 }
 
 function checkKnob(input){
@@ -87,6 +90,9 @@ function startTimer(){
             return;
         }
     }
+    $(".TimerKnob").hide();
+    $(".Timer").show();
+    $(".TeaReady").hide();
     // start timer and set timer flag
     TimerIsOnFlag = true;
     Time_start = Time;
@@ -99,6 +105,9 @@ function startTimer(){
 }
 
 function resetTimer(){
+    $(".TimerKnob").hide();
+    $(".Timer").show();
+    $(".TeaReady").hide();
     // stop timer, reset flag, reset time
     TimerIsOnFlag = false;
     Time = Time_start;
@@ -113,9 +122,30 @@ function resetTimer(){
 
 function timerFunction(){
     Time -= TimerStep;
-    if (Time<=0){
-
+    if (Time==0){
+        teaIsReady(0);
+    }else if(Time==-60000){
+        teaIsReady(1);
+    }else if(Time==-120000){
+        teaIsReady(2);
     }else{
         updateTime(Time);
     }
+}
+
+function teaIsReady(mode){
+    if(mode==0){
+        TeaReadySound.play();
+        $(".TeaReady").text("Your perfect cuppa is ready");
+    }else if(mode==1){
+        TeaReadySound.play();
+        $(".TeaReady").text("Don't wait too long!");
+    }else if(mode==2){
+        TeaReadySound.play();
+        $(".TeaReady").text("Happy tea time");
+        clearInterval(timer);
+    }
+    $(".TeaReady").show();
+    $(".Timer").hide();
+    $(".TimerKnob").hide();
 }
