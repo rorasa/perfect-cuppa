@@ -5,6 +5,9 @@ body{
     padding-top: 50px;
 }
 
+.navbar-gray{
+    background-color: white;
+}
 .navbar-gray a{
     color: black;
 }
