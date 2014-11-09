@@ -9,6 +9,12 @@ var TeaReadySound = {};
 $(document).ready(function(){
     $(".TimerKnob").hide();
     $(".TeaReady").hide();
+    var iOS = ( navigator.userAgent.match(/(iPad|iPhone|iPod)/g) ? true : false );
+    if(iOS){
+        $("#ios-notice").show();
+    }else{
+        $("#ios-notice").hide();
+    }
     init();
 
     $(".MainButton").click(function(){
